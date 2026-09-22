@@ -14,7 +14,8 @@ jobs:
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace sophgo/tpuc_dev:latest /bin/bash -c "
             cd /workspace &&
-            model_transform \
+            source /workspace/tpu-mlir/envsetup.sh || true &&
+            model_transform.py \
               --model_name yolov11n_face \
               --model_def model.onnx \
               --input_shapes '[[1,3,640,640]]' \
