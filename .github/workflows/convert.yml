@@ -12,9 +12,10 @@ jobs:
 
       - name: Run Sophgo Compiler Container
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace sophgo/tpuc_dev:latest /bin/bash -c "
+          docker run --rm -v ${{ github.workspace }}:/workspace sophgo/tpuc_dev:v3.4 /bin/bash -c "
+            pip install 'tpu_mlir[onnx]' psutil &&
+            pip install torch --index-url https://download.pytorch.org/whl/cpu &&
             cd /workspace &&
-            source /workspace/tpu-mlir/envsetup.sh || true &&
             model_transform.py \
               --model_name yolov11n_face \
               --model_def model.onnx \
@@ -27,7 +28,7 @@ jobs:
             model_deploy.py \
               --mlir yolov11n_face.mlir \
               --quantize F32 \
-              --chip sg200x \
+              --processor cv181x \
               --model yolov11n_face.cvimodel
           "
 
