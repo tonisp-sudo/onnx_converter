@@ -12,7 +12,7 @@ jobs:
 
       - name: Run Sophgo Compiler Container
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace sophgo/tpuc_dev:v3.4 /bin/bash -c "
+          docker run --rm -v ${{ github.workspace }}:/workspace sophgo/tpuc_dev:latest /bin/bash -c "
             cd /workspace &&
             model_transform \
               --model_name yolov11n_face \
